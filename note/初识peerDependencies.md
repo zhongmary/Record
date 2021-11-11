@@ -1,0 +1,3 @@
+package.json 中的配置项中我们经常接触到 dependencies、devDependencies和peerDependencies
+
+peerDependencies 在我们进行一些插件开发的时候会经常用到，看字面含义「同等依赖」，提示宿主环境去安装插件中peerDependencies所指定的依赖包，解决宿主环境与插件依赖包不一致的问题，避免重复下载或多个版本共存。
