@@ -25,7 +25,9 @@ let lastUrl: string | null = null
 
 export const reroute = (url: string) => {
   if (url !== lastUrl) {
+    // 匹配路由，寻找符合条件的子应用
     const { actives, unmounts } = getAppListStatus()
+    // 执行生命周期
     Promise.all(
       unmounts
         .map(async (app) => {
@@ -39,6 +41,7 @@ export const reroute = (url: string) => {
           })
         )
     ).then(() => {
+      // 执行路由劫持小节未使用的函数
       callCapturedListeners()
     })
   }

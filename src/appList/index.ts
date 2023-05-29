@@ -5,6 +5,7 @@ let appList: IAppInfo[] = []
 
 export const setAppList = (list: IAppInfo[]) => {
   appList = list
+  // 啥意思？
   appList.map((app) => {
     ;(app as IInternalAppInfo).status = AppStatus.NOT_LOADED
   })

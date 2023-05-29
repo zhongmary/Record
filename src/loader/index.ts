@@ -3,6 +3,8 @@ import { importEntry } from 'import-html-entry'
 import { ProxySandbox } from './sandbox'
 
 export const loadHTML = async (app: IInternalAppInfo) => {
+  // container: '#micro-container',
+  // entry: 'http://localhost:8080',
   const { container, entry } = app
 
   const { template, getExternalScripts, getExternalStyleSheets } =
@@ -17,7 +19,10 @@ export const loadHTML = async (app: IInternalAppInfo) => {
 
   await getExternalStyleSheets()
   const jsCode = await getExternalScripts()
+  // 对于一段 JS 字符串来说，我们想执行的话大致上有两种方式：
 
+  // eval(js string)
+  // new Function(js string)()
   jsCode.forEach((script) => {
     const lifeCycle = runJS(script, app)
     if (lifeCycle) {
@@ -32,6 +37,7 @@ export const loadHTML = async (app: IInternalAppInfo) => {
 
 const runJS = (value: string, app: IInternalAppInfo) => {
   if (!app.proxy) {
+    // JS 沙箱  子应用直接修改 window 上的属性又要能访问 window 上的内容，那么就只能做个假的 window 给子应用
     app.proxy = new ProxySandbox()
     // @ts-ignore
     window.__CURRENT_PROXY__ = app.proxy.proxy

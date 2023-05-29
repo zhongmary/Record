@@ -4,6 +4,8 @@ import { IInternalAppInfo } from '../types'
 const scripts: string[] = []
 const links: string[] = []
 const inlineScript: string[] = []
+// 解析内容这块还是简单的，我们递归寻找元素，将 link、script、img 元素找出来并做对应的处理即可
+// 可以考虑直接使用三方库来实现加载及解析文件的过程，这里我们选用了 import-html-entry 这个库
 
 export const parseHTML = (parent: HTMLElement, app: IInternalAppInfo) => {
   const children = Array.from(parent.children) as HTMLElement[]
@@ -44,7 +46,7 @@ const parseScript = (
   comment && parent.replaceChild(comment, script)
   return { url: getCompletionURL(src, app.entry), text: script.innerHTML }
 }
-
+// 只需要处理 CSS 资源，其它 preload / prefetch 的这些资源直接替换 href 就行
 const parseLink = (
   link: HTMLElement,
   parent: HTMLElement,

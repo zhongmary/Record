@@ -9,6 +9,7 @@ export interface IAppInfo {
 
 export interface IInternalAppInfo extends IAppInfo {
   status: AppStatus
+  // bootstrap：首次应用加载触发，常用于配置子应用全局信息
   bootstrap?: LifeCycle
   mount?: LifeCycle
   unmount?: LifeCycle
